@@ -27,11 +27,6 @@ class Rotor:
         """"""
         pass
 
-        # # in_contact_index = self._get_contact_in(char)
-        # # contact_char = self._index_to_char(in_contact_index)
-        # # pin_index = self.pattern.index(contact_char)
-        # # return self._get_contact_out(pin_index)
-
 
     def status(self):
         """print rotor status
