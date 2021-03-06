@@ -57,7 +57,7 @@ class Enigma:
 if __name__ == "__main__":
     en = Enigma(
         plug_leads="AB CX", 
-        reflector="A",
+        reflect__pyor="A",
         rotor_labels=("I", "II", "III"),
         starting_positions=("A", "B", "C"),
         ring_settings=(1,2,3)
