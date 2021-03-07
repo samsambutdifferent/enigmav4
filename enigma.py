@@ -33,13 +33,12 @@ class Enigma:
 
     def encode_message(self, msg):
         message = ""
-        for char in msg:
-            message += self.__encode(char)
-
+        for signal in msg:
+            message += self.__encode(signal)
         return message
         
 
-    def __encode(self, char):
+    def __encode(self, signal):
         """
         TODO update
         """
@@ -47,19 +46,19 @@ class Enigma:
         self.__rotate_positions()
 
         # convert using plug board
-        char = self.plug_board.encode(char)
+        signal = self.plug_board.encode(signal)
 
         # encode
-        char = self.__signal_received(char)
+        signal = self.__signal_received(signal)
 
         # convert back using plug board
-        char = self.plug_board.encode(char)
+        signal = self.plug_board.encode(signal)
         
-        return char
+        return signal
 
 
     def __signal_received(self, signal):
-        """
+        """ pass signal through rotors & reflectors in sequence
         TODO update
         """
         # pass signal from from right to left
@@ -77,31 +76,25 @@ class Enigma:
 
 
     def __rotate_positions(self):
+        """rotate all rotatable rotors
+        TODO Update
         """
-        TODO update
-        Trigger a rotation of the rotors, starting by turning the right-most
-        rotor. This should be called once for every keypress, before encoding.
-        """
-        should_next_rotor_rotate = False
-        for index, rotor in enumerate(reversed(self.rotors)):
-            is_first_rotor = (index == 0)
-            is_last_rotor = (index == len(self.rotors) - 1)
+        rotate_next = False
+        first_static_rotor = 4
 
-            is_on_notch = rotor.notched()   
-            has_notch = rotor.notch != ""
+        for i, rotor in enumerate(reversed(self.rotors)):
+            rotor_one = 0 == i
+            rotor_final = (len(self.rotors) - 1) == i 
 
-
-            # 3 is the last rotor able to turn ??
-            if is_last_rotor and len(self.rotors) > 3:
+            if rotor_final and len(self.rotors) >= first_static_rotor:
                 break
 
-            if is_first_rotor or should_next_rotor_rotate or (
-                not is_last_rotor and is_on_notch
-            ):
-                should_next_rotor_rotate = is_on_notch
+            if rotor_one or rotate_next or (not rotor_final and rotor.notched()):
+                
+                rotate_next = rotor.notched()
                 rotor.rotate()
 
-                if not should_next_rotor_rotate and not has_notch:
+                if not rotate_next and rotor.notch == "":
                     break
             else:
                 break
