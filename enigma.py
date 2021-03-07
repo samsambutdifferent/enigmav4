@@ -32,15 +32,11 @@ class Enigma:
         for signal in msg:
             message += self.__encode(signal)
         return message
-
+    
 
     def __encode(self, signal):
+        """pass signal through plugboard to rotorboard then back through plugboard
         """
-        TODO update
-        """
-        # advance rotor postions
-        self.rotor_board.rotate_positions()
-
         # convert using plug board
         signal = self.plug_board.encode(signal)
 

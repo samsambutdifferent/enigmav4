@@ -62,6 +62,9 @@ class RotorBoard:
         """ pass signal through rotors & reflectors in sequence
         TODO update
         """
+        # advance rotor postions
+        self.rotate_positions()
+
         # pass signal from from right to left
         for r in self.rotors[::-1]:
             signal = r.encode_right_to_left(signal)
@@ -77,10 +80,10 @@ class RotorBoard:
 
 
     def status(self):
-            """print status
-            """
-            for r in self.rotors:
-                r.status()
+        """print status
+        """
+        for r in self.rotors:
+            r.status()
 
 
 if __name__=="__main__":
