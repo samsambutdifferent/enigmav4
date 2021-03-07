@@ -21,30 +21,41 @@ class RotorBoard:
 
         self.__number_of_rotors = len(self.rotors)
         self.__max_rotor_index = len(self.rotors) - 1
-        self.__first_static_rotor = 4
+        self.__static_rotor_index = 4
 
 
     def rotate_positions(self):
         """rotate all rotatable rotors
-        TODO Update
+         TODO Update
         """
+        reverse_rotors = list(reversed(self.rotors))
         rotate_next = False
-        for i, rotor in enumerate(reversed(self.rotors)):
-            rotor_one = 0 == i
-            rotor_final = self.__max_rotor_index == i 
 
-            if rotor_final and self.__number_of_rotors >= self.__first_static_rotor:
+        for i, rotor in enumerate(reverse_rotors):
+            rotor_one = 0 == i
+            rotor_is_final = self.__max_rotor_index == i
+
+            # if it is the final rotor and is static
+            if rotor_is_final and self.__number_of_rotors >= self.__static_rotor_index:
                 break
 
-            if rotor_one or rotate_next or (not rotor_final and rotor.notched()):
-                
+            # if is first rotor always rotate
+            if rotor_one:
                 rotate_next = rotor.notched()
                 rotor.rotate()
-
-                if not rotate_next and rotor.notch == "":
-                    break
+            # if turnover
+            elif rotate_next:
+                rotate_next = rotor.notched()
+                rotor.rotate()
+            # if it is not the last one and is notched
+            elif not rotor_is_final and rotor.notched():
+                rotate_next = rotor.notched()
+                rotor.rotate()
             else:
                 break
+            
+            if not rotate_next and rotor.notch == "":
+                    break
     
 
     def signal_received(self, signal):
