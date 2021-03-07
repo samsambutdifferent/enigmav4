@@ -21,43 +21,39 @@ class Rotor:
 
 
     def encode_right_to_left(self, char):
+        """pass signal from right to left through rotor
         """
-            TODO update
+        i = self.__offset(char)
+        c = helper.convert_index_to_character(self.__contacts, i)
+        i = helper.convert_character_to_index(self.__pins, c)
+
+        return self.__reset(i)
+
+
+    def encode_left_to_right(self, signal):
+        """ pass signal from left to right through rotor
         """
-        in_contact_index = self._get_contact_in(char)
-        
-        char = self.__contacts[in_contact_index]
-        
-        pin_index = helper.convert_character_to_index(self.__pins, char)
+        i = self.__offset(signal)
+        c = helper.convert_index_to_character(self.__pins, i)
+        i = helper.convert_character_to_index(self.__contacts, c)
 
-        return self._get_contact_out(pin_index)
-
-
-    def encode_left_to_right(self, char):
-        """ TODO Update
-        """
-        in_contact_index = self._get_contact_in(char)
-
-        contact_char = helper.convert_index_to_character(self.__pins, in_contact_index)
-
-        pin_index = self.__contacts.index(contact_char)
-        return self._get_contact_out(pin_index)
+        return self.__reset(i)
 
     
-    def _get_contact_in(self, char):
-        """ offset incoming signal using pos & r. set, return index
+    def __offset(self, char):
+        """ Offset incoming signal using pos & r. set, return index
         """
-        index = helper.convert_character_to_index(self.__pins, char)
-        offset_index = index + self.position - self.__ring_setting
-        wrap_round_index = offset_index % len(self.__contacts)
+        incoming_index = helper.convert_character_to_index(self.__pins, char)
+        offset_index = incoming_index + self.position - self.__ring_setting
+        wrap_round_index = helper.wrap_round_index(self.__contacts, offset_index)
         return wrap_round_index
 
 
-    def _get_contact_out(self, index):
-        """ offset outgoing signal using pos & r. set, return char
+    def __reset(self, index):
+        """ Reset outgoing signal using pos & r. set, return char
         """
-        offset_index = index - self.position + self.__ring_setting
-        wrap_round_index = offset_index % len(self.__contacts)
+        reset_index = index - self.position + self.__ring_setting
+        wrap_round_index = helper.wrap_round_index(self.__contacts, reset_index)
         converted_char = helper.convert_index_to_character(self.__pins, wrap_round_index)
         return converted_char
 
