@@ -24,7 +24,7 @@ class RotorBoard:
         self.__static_rotor_index = 4
 
 
-    def rotate_positions(self):
+    def __rotate_positions(self):
         """rotate all rotatable rotors
          TODO Update
         """
@@ -63,7 +63,7 @@ class RotorBoard:
         TODO update
         """
         # advance rotor postions
-        self.rotate_positions()
+        self.__rotate_positions()
 
         # pass signal from from right to left
         for r in self.rotors[::-1]:
