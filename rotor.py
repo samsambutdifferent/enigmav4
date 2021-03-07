@@ -45,37 +45,30 @@ class Rotor:
 
     
     def _get_contact_in(self, char):
+        """ offset incoming signal using pos & r. set, return index
         """
-        TODO UPDATE
-        Adjust an input character based on the current position and rotor's
-        setting
-        """
-        in_contact_index = helper.convert_character_to_index(self.__pins, char)
-
-        return (
-            in_contact_index + self.position - self.__ring_setting
-        ) % len(self.__contacts)
+        index = helper.convert_character_to_index(self.__pins, char)
+        offset_index = index + self.position - self.__ring_setting
+        wrap_round_index = offset_index % len(self.__contacts)
+        return wrap_round_index
 
 
     def _get_contact_out(self, index):
+        """ offset outgoing signal using pos & r. set, return char
         """
-        TODO UPDATE
-        Get the exit character for a given contact adjusting based on current
-        position and rotor's setting
-        """
-        contact_out_index = (index - self.position +
-                            self.__ring_setting) % len(self.__contacts)
-        
-        return helper.convert_index_to_character(self.__pins, contact_out_index)
+        offset_index = index - self.position + self.__ring_setting
+        wrap_round_index = offset_index % len(self.__contacts)
+        converted_char = helper.convert_index_to_character(self.__pins, wrap_round_index)
+        return converted_char
 
 
     def rotate(self):
+        """moves rotor posistion along onw
         """
-        TODO UPDATE
-        Trigger a rotation of this rotor. It will wrap around if it reaches
-        the last position available
-        """
-        self.position = (self.position + 1) % len(self.__contacts)
+        new_position = self.position + 1
+        wrap_round_index = new_position % len(self.__contacts)
+        self.position = wrap_round_index
+
 
     def notched(self):
         """posistion is currently on notch
