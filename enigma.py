@@ -1,4 +1,4 @@
-from plug_board import PlugBoard
+from plug_board import Plugboard
 from plug_lead import PlugLead
 from rotor import Rotor
 
@@ -13,7 +13,7 @@ class Enigma:
                 starting_positions:
                 ring_setting
         """
-        self.plug_board = PlugBoard()
+        self.plug_board = Plugboard()
         for connection in plug_leads.split(" "):
             if connection != "":
                 self.plug_board.add(PlugLead(connection))
