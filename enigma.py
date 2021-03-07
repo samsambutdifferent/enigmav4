@@ -43,6 +43,9 @@ class Enigma:
         """
         TODO update
         """
+        # advance rotor postions
+        self.__rotate_positions()
+
         # convert using plug board
         char = self.plug_board.encode(char)
 
@@ -59,9 +62,6 @@ class Enigma:
         """
         TODO update
         """
-        # advance rotor postions
-        self.__rotate_positions()
-
         # pass signal from from right to left
         for r in self.rotors[::-1]:
             signal = r.encode_right_to_left(signal)
@@ -101,7 +101,7 @@ class Enigma:
                 should_next_rotor_rotate = is_on_notch
                 rotor.rotate()
 
-                if not should_next_rotor_rotate and has_notch:
+                if not should_next_rotor_rotate and not has_notch:
                     break
             else:
                 break
@@ -118,37 +118,4 @@ class Enigma:
 
 
 if __name__ == "__main__":
-
-# * With rotors `I II III IV`, reflector `C`, ring settings `07 11 15 19`, and initial positions `Q E V Z`, encoding a `Z` produces a `V`.
-
-    en = Enigma(
-        plug_leads="", 
-        reflector="C",
-        rotor_labels=("I", "II", "III", "IV"),
-        starting_positions=("Q", "E", "V", "Z"),
-        ring_settings=(7,11,15,19),
-    )
-
-    en.status()
-    ans = en.encode_message("Z")
-    assert ans == "V"
-
-
-# Set up your enigma machine with rotors IV V Beta I, reflector A, ring settings 18 24 03 05, and initial positions E Z G P.
-# The plugboard should map the following pairs: PC XZ FM QA ST NB HY OR EV IU.
-# Find the result of decoding the following string: BUPXWJCDPFASXBDHLBBIBSRNWCSZXQOLBNXYAXVHOGCUUIBCVMPUZYUUKHI.
-
-
-    en = Enigma(
-        plug_leads="PC XZ FM QA ST NB HY OR EV IU", 
-        reflector="A",
-        rotor_labels=("IV", "V", "Beta", "I"),
-        starting_positions=("E", "Z", "G", "P"),
-        ring_settings=(1,1,1,1),
-    )
-
-    en.status()
-    ans = en.encode_message("BUPXWJCDPFASXBDHLBBIBSRNWCSZXQOLBNXYAXVHOGCUUIBCVMPUZYUUKHI")
-
-    assert ans == "RFKTMBXVVW"
-
+    pass
