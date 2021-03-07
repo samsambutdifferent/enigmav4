@@ -78,6 +78,7 @@ def code_one():
                 rotor_labels=p[0], 
                 starting_positions=p[3],
                 ring_settings=p[2])
+        
 
     print(f"Answer to question one, missing reflector: {ans[1]}")
 
@@ -111,10 +112,10 @@ if __name__ == "__main__":
     cribs = ["UNIVERSITY"]
 
     possiblities = list(it.product(
-        [("Beta", "I", "V")], # index 0
+        [("Beta", "I", "III")], # index 0
         ["B"], # index 1
         [(23, 2, 10)], # index 2
-        (all_starting_pos,all_starting_pos,all_starting_pos), # index 3
+        list(it.product(all_starting_pos, all_starting_pos, all_starting_pos)), # index 3
         ["VH PT ZG BJ EY FS"] # index 4
     ))
 
@@ -126,8 +127,11 @@ if __name__ == "__main__":
                 rotor_labels=p[0], 
                 starting_positions=p[3],
                 ring_settings=p[2])
+
+        if ans != set():
+            break
     
-    print(f"Answer to question two, missing reflector: {ans[3]}")
+    print(f"Answer to question two, missing starting positions: {ans[3]}")
 
 
 
