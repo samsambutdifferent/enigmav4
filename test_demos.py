@@ -82,4 +82,39 @@ class TestDemos:
         ans = en.encode_message("H")
         assert ans == "Y"
 
+
+    # * With rotors `I II III IV`, reflector `C`,
+    #  ring settings `07 11 15 19`, 
+    #  and initial positions `Q E V Z`, encoding a `Z` produces a `V`.
+
+        en = Enigma(
+            plug_leads="", 
+            reflector="C",
+            rotor_labels=("I", "II", "III", "IV"),
+            starting_positions=("Q", "E", "V", "Z"),
+            ring_settings=(7,11,15,19),
+        )
+    
+        en.status()
+        ans = en.encode_message("Z")
+        assert ans == "V"
+
+
+# Set up your enigma machine with rotors IV V Beta I, reflector A, 
+# ring settings 18 24 03 05, and initial positions E Z G P.
+# The plugboard should map the following pairs: PC XZ FM QA ST NB HY OR EV IU.
+# Find the result of decoding the following string: BUPXWJCDPFASXBDHLBBIBSRNWCSZXQOLBNXYAXVHOGCUUIBCVMPUZYUUKHI.
+
+        en = Enigma(
+            plug_leads="PC XZ FM QA ST NB HY OR EV IU", 
+            reflector="A",
+            rotor_labels=("IV", "V", "Beta", "I"),
+            starting_positions=("E", "Z", "G", "P"),
+            ring_settings=(18,24,3,5),
+        )
+    
+        en.status()
+        ans = en.encode_message("BUPXWJCDPFASXBDHLBBIBSRNWCSZXQOLBNXYAXVHOGCUUIBCVMPUZYUUKHI")
+        assert ans == "CONGRATULATIONSONPRODUCINGYOURWORKINGENIGMAMACHINESIMULATOR"
+
         
