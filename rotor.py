@@ -1,4 +1,5 @@
 from rotor_settings import rotor_settings
+import helper
 
 
 class Rotor:
@@ -24,7 +25,11 @@ class Rotor:
             TODO update
         """
         in_contact_index = self._get_contact_in(char)
-        pin_index = self._char_to_index(self.__contacts[in_contact_index])
+        
+        char = self.__contacts[in_contact_index]
+        
+        pin_index = helper.convert_character_to_index(self.__pins, char)
+
         return self._get_contact_out(pin_index)
 
 
@@ -32,7 +37,9 @@ class Rotor:
         """ TODO Update
         """
         in_contact_index = self._get_contact_in(char)
-        contact_char = self._index_to_char(in_contact_index)
+
+        contact_char = helper.convert_index_to_character(self.__pins, in_contact_index)
+
         pin_index = self.__contacts.index(contact_char)
         return self._get_contact_out(pin_index)
 
@@ -43,7 +50,8 @@ class Rotor:
         Adjust an input character based on the current position and rotor's
         setting
         """
-        in_contact_index = self._char_to_index(char)
+        in_contact_index = helper.convert_character_to_index(self.__pins, char)
+
         return (
             in_contact_index + self.position - self.__ring_setting
         ) % len(self.__contacts)
@@ -57,26 +65,8 @@ class Rotor:
         """
         contact_out_index = (index - self.position +
                             self.__ring_setting) % len(self.__contacts)
-        return self._index_to_char(contact_out_index)
-
-
-    def _char_to_index(self, char: str):
-        """
-        TODO UPDATE
-        Convert an input character into an index in the rotor's alphabet
-        """
-        try:
-            return self.__pins.index(char)
-        except:
-            raise ValueError("Notch not in rotor pattern! " + char)
-
-
-    def _index_to_char(self, index: int):
-        """
-        TODO UPDATE
-        Convert an index in the rotor's alphabet into a character
-        """
-        return self.__pins[index]
+        
+        return helper.convert_index_to_character(self.__pins, contact_out_index)
 
 
     def rotate(self):
@@ -87,22 +77,13 @@ class Rotor:
         """
         self.position = (self.position + 1) % len(self.__contacts)
 
-    def get_posistion(self):
-        return chr(self.position + 65)
-
-    def has_notch(self):
+    def notched(self):
+        """posistion is currently on notch
         """
-        TODO Update
-        Return True if this rotor has any notches
-        """
-        return self.notch is not None and len(self.notch) > 0
-
-    def is_on_notch(self):
-        """
-        TODO Update
-        Return True if the current position is on a notch
-        """
-        return self.has_notch() and self.get_posistion() in self.notch
+        if self.notch != "":
+            return chr(self.position + 65) in self.notch
+        else:
+            return False
 
 
     def status(self):

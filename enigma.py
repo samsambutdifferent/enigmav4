@@ -87,8 +87,8 @@ class Enigma:
             is_first_rotor = (index == 0)
             is_last_rotor = (index == len(self.rotors) - 1)
 
-            is_on_notch = rotor.is_on_notch()
-            has_notch = rotor.has_notch()
+            is_on_notch = rotor.notched()   
+            has_notch = rotor.notch != ""
 
 
             # 3 is the last rotor able to turn ??

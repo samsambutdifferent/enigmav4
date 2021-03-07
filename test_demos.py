@@ -99,11 +99,11 @@ class TestDemos:
         ans = en.encode_message("Z")
         assert ans == "V"
 
-
-# Set up your enigma machine with rotors IV V Beta I, reflector A, 
-# ring settings 18 24 03 05, and initial positions E Z G P.
-# The plugboard should map the following pairs: PC XZ FM QA ST NB HY OR EV IU.
-# Find the result of decoding the following string: BUPXWJCDPFASXBDHLBBIBSRNWCSZXQOLBNXYAXVHOGCUUIBCVMPUZYUUKHI.
+    
+    # Set up your enigma machine with rotors IV V Beta I, reflector A, 
+    # ring settings 18 24 03 05, and initial positions E Z G P.
+    # The plugboard should map the following pairs: PC XZ FM QA ST NB HY OR EV IU.
+    # Find the result of decoding the following string: BUPXWJCDPFASXBDHLBBIBSRNWCSZXQOLBNXYAXVHOGCUUIBCVMPUZYUUKHI.
 
         en = Enigma(
             plug_leads="PC XZ FM QA ST NB HY OR EV IU", 
@@ -113,7 +113,6 @@ class TestDemos:
             ring_settings=(18,24,3,5),
         )
     
-        en.status()
         ans = en.encode_message("BUPXWJCDPFASXBDHLBBIBSRNWCSZXQOLBNXYAXVHOGCUUIBCVMPUZYUUKHI")
         assert ans == "CONGRATULATIONSONPRODUCINGYOURWORKINGENIGMAMACHINESIMULATOR"
 

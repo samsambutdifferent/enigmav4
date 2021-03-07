@@ -1,7 +1,8 @@
-# alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+"""Helper functions
+"""
 
-# def alp_char_to_index(c):
-#     return alphabet.index(c)
+def convert_index_to_character(keys, index):
+        return keys[index]
 
-# def alph_index_to_char(index):
-#     return alphabet[index]
+def convert_character_to_index(keys, char):
+        return keys.index(char)
