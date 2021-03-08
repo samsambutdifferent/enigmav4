@@ -32,6 +32,11 @@ class Enigma:
 
 
     def encode_message(self, msg):
+        """encode/decode a msg
+            params:
+                msg: string
+        """
+
         message = ""
         for signal in msg:
             message += self.__encode(signal)
@@ -39,8 +44,11 @@ class Enigma:
     
 
     def __encode(self, signal):
-        """pass signal through plugboard to rotorboard then back through plugboard
+        """encode/decode a single charcter signal - pass through plugboard, rotorboard, plugboard
+            params:
+                signal: char
         """
+
         # convert using plug board
         signal = self.plug_board.encode(signal)
 
@@ -54,7 +62,7 @@ class Enigma:
 
 
     def status(self):
-        """print status
+        """print status of enigma machine
         """
         print("Plugboard:")
         self.plug_board.status()

@@ -4,7 +4,7 @@ import helper
 
 class Rotor:
     def __init__(self, label, pins=rotor_settings["Base"]["settings"], starting_position="A", ring_setting=1):
-        """initiate a rotor
+        """initiate a version of the rotor
             params:
                 label: string
                 pins: string
@@ -39,7 +39,9 @@ class Rotor:
 
 
     def encode_right_to_left(self, char):
-        """pass signal from right to left through rotor
+        """signal from r/l through rotor
+            params:
+                signal: string
         """
         i = self.__offset(char)
         c = helper.convert_index_to_character(self.__contacts, i)
@@ -49,7 +51,9 @@ class Rotor:
 
 
     def encode_left_to_right(self, signal):
-        """ pass signal from left to right through rotor
+        """signal from l/r through rotor
+            params:
+                signal: string
         """
         i = self.__offset(signal)
         c = helper.convert_index_to_character(self.__pins, i)
@@ -59,7 +63,9 @@ class Rotor:
 
     
     def __offset(self, char):
-        """ Offset incoming signal using pos & r. set, return index
+        """ Offset incoming signal using pos & r. set
+                params:
+                    char: string
         """
         incoming_index = helper.convert_character_to_index(self.__pins, char)
         offset_index = incoming_index + self.position - self.__ring_setting
@@ -68,7 +74,9 @@ class Rotor:
 
 
     def __reset(self, index):
-        """ Reset outgoing signal using pos & r. set, return char
+        """ Reset outgoing signal using pos & r. set
+                params:
+                    index: int
         """
         reset_index = index - self.position + self.__ring_setting
         wrap_round_index = helper.wrap_round_index(self.__contacts, reset_index)
@@ -77,14 +85,14 @@ class Rotor:
 
 
     def advance(self):
-        """advances rotor posistion by
+        """advances rotor posistion by one
         """
         new_position = self.position + 1
         wrap_round_index =  helper.wrap_round_index(self.__contacts,new_position )
         self.position = wrap_round_index
 
 
-    def notched(self):
+    def check_rotor_notched(self):
         """posistion is currently on notch
         """
         if self.notch != "":

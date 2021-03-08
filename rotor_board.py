@@ -3,11 +3,12 @@ import helper
 
 class RotorBoard:
     def __init__(self, rotor_labels, starting_positions, ring_settings, reflector):
-        """initiate the rotor board
-                params: rotor_labels: tuple
-                        starting_positions: tuple
-                        ring_settings: tuple
-                        reflector: string
+        """initiate a version of the rotor board
+                params: 
+                    rotor_labels: tuple
+                    starting_positions: tuple
+                    ring_settings: tuple
+                    reflector: string
         """
 
         if helper.lengths_out_of_range(keys=[rotor_labels, ring_settings, starting_positions] ,max=4,min=3):
@@ -29,7 +30,7 @@ class RotorBoard:
 
 
     def __advance_position(self):
-        """move required rotor positions forward
+        """advance rotor positions that are are able to advance
         """
         r_to_l_rotors = [rotor for rotor in self.rotors[::-1]]
 
@@ -42,17 +43,17 @@ class RotorBoard:
             
             # if is first rotor always advance
             if 0 == i:
-                advance_nxt = rotor.notched()
+                advance_nxt = rotor.check_rotor_notched()
                 rotor.advance()
             
             # if turnedover
             elif advance_nxt:
-                advance_nxt = rotor.notched()
+                advance_nxt = rotor.check_rotor_notched()
                 rotor.advance()
 
             # if it is not the last one and is notched
-            elif  self.__max_rotor_index != i and rotor.notched():
-                advance_nxt = rotor.notched()
+            elif  self.__max_rotor_index != i and rotor.check_rotor_notched():
+                advance_nxt = rotor.check_rotor_notched()
                 rotor.advance()
             
             else:
@@ -64,6 +65,8 @@ class RotorBoard:
 
     def transform_signal(self, signal):
         """ pass signal through rotors r/l then reflector then rotors l/r
+                params:
+                    signal: string
         """
         # advance rotor postions
         self.__advance_position()
@@ -83,7 +86,7 @@ class RotorBoard:
 
 
     def status(self):
-        """print status
+        """print status of rotor board
         """
         for r in self.rotors:
             r.status()

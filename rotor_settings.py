@@ -1,3 +1,12 @@
+"""all available rotor settings
+    "label": {
+      "notch": "",
+      "settings" ""
+    }
+    settings are the contacts for the rotor
+    if no notch put empty string
+"""
+
 rotor_settings = {
     "Base": { 
       "notch": "",

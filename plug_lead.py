@@ -3,6 +3,8 @@
 class PlugLead:
     def __init__(self, mapping):
         """initiate Plug Lead
+            params:
+                mapping: string
         """
         if type(mapping) != str:
             raise ValueError('Mapping value should be a string')
@@ -14,6 +16,10 @@ class PlugLead:
         self.mapping = mapping
         
     def encode(self, character):
+        """swap char for char if in plug lead mapping
+            params:
+                character: string
+        """
         if character in self.mapping:
             return ''.join([c for c in self.mapping if c != character])
         else:
