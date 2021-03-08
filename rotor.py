@@ -38,16 +38,21 @@ class Rotor:
         self.position = ord(starting_position) - 65
 
 
-    def encode_right_to_left(self, char):
+    def encode_right_to_left(self, signal):
         """signal from r/l through rotor
             params:
                 signal: string
         """
-        i = self.__offset(char)
+        # get offset using pos & ring set
+        i = self.__offset(signal)
+        # convert to contacts char
         c = helper.convert_index_to_character(self.__contacts, i)
+        # convert to pin index
         i = helper.convert_character_to_index(self.__pins, c)
+        # reset to char using pos & ring set
+        c = self.__reset(i)
 
-        return self.__reset(i)
+        return c
 
 
     def encode_left_to_right(self, signal):
@@ -55,21 +60,30 @@ class Rotor:
             params:
                 signal: string
         """
+        # get offset using pos & ring set
         i = self.__offset(signal)
+        # convert to pins char
         c = helper.convert_index_to_character(self.__pins, i)
+        # convert to contacts index
         i = helper.convert_character_to_index(self.__contacts, c)
+        # reset to char using pos & ring set
+        c =  self.__reset(i)
 
-        return self.__reset(i)
+        return c
 
     
-    def __offset(self, char):
+    def __offset(self, signal):
         """ Offset incoming signal using pos & r. set
                 params:
                     char: string
         """
-        incoming_index = helper.convert_character_to_index(self.__pins, char)
+        # convert signal to pins index
+        incoming_index = helper.convert_character_to_index(self.__pins, signal)
+        # offset with pos - ring setting
         offset_index = incoming_index + self.position - self.__ring_setting
+        # wrap round to ensure over hang dealt with
         wrap_round_index = helper.wrap_round_index(self.__contacts, offset_index)
+
         return wrap_round_index
 
 
@@ -78,17 +92,24 @@ class Rotor:
                 params:
                     index: int
         """
+        # reset index with pos & ring set
         reset_index = index - self.position + self.__ring_setting
+        # wrap round to ensure over hang dealt with
         wrap_round_index = helper.wrap_round_index(self.__contacts, reset_index)
-        converted_char = helper.convert_index_to_character(self.__pins, wrap_round_index)
-        return converted_char
+        # convert signal back to character
+        converted_signal = helper.convert_index_to_character(self.__pins, wrap_round_index)
+
+        return converted_signal
 
 
     def advance(self):
         """advances rotor posistion by one
         """
+        # move position forward once
         new_position = self.position + 1
-        wrap_round_index =  helper.wrap_round_index(self.__contacts,new_position )
+        # deal with wrap round overhang
+        wrap_round_index =  helper.wrap_round_index(self.__contacts,new_position)
+        
         self.position = wrap_round_index
 
 
