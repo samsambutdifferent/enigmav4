@@ -2,7 +2,6 @@ from plug_board import Plugboard
 from plug_lead import PlugLead
 from rotor import Rotor
 from rotor_board import RotorBoard
-import helper
 
 
 class Enigma:
@@ -16,8 +15,8 @@ class Enigma:
                 plug_leads: string
         """
 
-        if helper.lengths_out_of_range(keys=[rotor_labels, ring_settings, starting_positions] ,max=4,min=3):
-            raise ValueError("Rotor labels, starting positions and ring settings must be of even lengths, and within max minimum range")
+        if type(plug_leads) != str:
+            raise ValueError("Plug leads must be a string of space seprated")
 
         self.plug_board = Plugboard()
         for connection in plug_leads.split(" "):

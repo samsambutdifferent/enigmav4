@@ -325,7 +325,6 @@ class TestDemos:
                 ring_settings=(1,1,1),
             )
 
-        
         with pytest.raises(ValueError):
             en = Enigma(
                 plug_leads="HL MO AJ CX BZ SR NI YW DG PK", 
@@ -334,3 +333,70 @@ class TestDemos:
                 starting_positions=("A", "A", "A"),
                 ring_settings=(1,1,1,2),
             )
+
+        with pytest.raises(ValueError):
+            en = Enigma(
+                plug_leads=1,
+                reflector="B",
+                rotor_labels=("III", "III", "I"),
+                starting_positions=("A", "A", "A"),
+                ring_settings=(1,1,1),
+            )
+
+        with pytest.raises(ValueError):
+            en = Enigma(
+                plug_leads="",
+                reflector="B",
+                rotor_labels=("X", "III", "I"),
+                starting_positions=("A", "A", "A"),
+                ring_settings=(1,1,1),
+            )
+
+        with pytest.raises(ValueError):
+                en = Enigma(
+                    plug_leads="",
+                    reflector="B",
+                    rotor_labels=(1, "III", "I"),
+                    starting_positions=("A", "A", "A"),
+                    ring_settings=(1,1,1),
+                )
+
+
+        with pytest.raises(ValueError):
+            en = Enigma(
+                plug_leads="",
+                reflector="B",
+                rotor_labels=("I", "III", "I"),
+                starting_positions=("AA", "A", "A"),
+                ring_settings=(1,1,1),
+            )
+
+
+        with pytest.raises(ValueError):
+            en = Enigma(
+                plug_leads="",
+                reflector="B",
+                rotor_labels=("I" "III", "I"),
+                starting_positions=("?", "A", "A"),
+                ring_settings=(1,1,1),
+            )
+
+        with pytest.raises(ValueError):
+            en = Enigma(
+                plug_leads="",
+                reflector="B",
+                rotor_labels=("I", "III", "I"),
+                starting_positions=("A", "A", "A"),
+                ring_settings=("1",1,1),
+            )        
+            
+        with pytest.raises(ValueError):
+            en = Enigma(
+                plug_leads="",
+                reflector="B",
+                rotor_labels=("I", "III", "I"),
+                starting_positions=("A", "A", "A"),
+                ring_settings=(100,1,1),
+            )
+
+        

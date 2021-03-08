@@ -11,9 +11,23 @@ class Rotor:
                 starting_position: string
                 ring_setting: int
         """
+        if type(label) != str:
+            raise ValueError('Rotor label should be of string')
+        if rotor_settings.get(label,"") == "":
+            raise ValueError('Rotor label not available in the rotor settings')
 
-        # TODO Value errors
+        if type(pins) != str:
+            raise ValueError('Rotor pins should be of type string')
 
+        if type(starting_position) != str or len(starting_position) > 1:
+            raise ValueError('Rotor starting posistion should be a single character string')
+        if ord(starting_position) - 65 < 0 or ord(starting_position) - 65 > 25 :
+            raise ValueError('Rotor starting posistion should be within the range of A-Z')
+
+        if type(ring_setting) != int:
+            raise ValueError('Rotor ring setting should be an int')
+        if ring_setting < 1 or ring_setting > 26:
+            raise ValueError('Rotor ring setting should be within the range 1-26')
 
         self.__label = label
         self.__pins = pins

@@ -1,4 +1,5 @@
 from rotor import Rotor
+import helper
 
 class RotorBoard:
     def __init__(self, rotor_labels, starting_positions, ring_settings, reflector):
@@ -9,8 +10,9 @@ class RotorBoard:
                         reflector: string
         """
 
-        # TODO Value errors
-
+        if helper.lengths_out_of_range(keys=[rotor_labels, ring_settings, starting_positions] ,max=4,min=3):
+            raise ValueError("Rotor labels, starting positions and ring settings must be of even lengths, and within max minimum range")
+        
         self.rotors = []
         for i,label in enumerate(rotor_labels):
             self.rotors.append(Rotor(
