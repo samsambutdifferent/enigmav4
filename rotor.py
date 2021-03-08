@@ -109,7 +109,7 @@ class Rotor:
         new_position = self.position + 1
         # deal with wrap round overhang
         wrap_round_index =  helper.wrap_round_index(self.__contacts,new_position)
-        
+
         self.position = wrap_round_index
 
 
@@ -132,6 +132,18 @@ class Rotor:
         print(f"position: {self.position}")
         print(f"ring_setting: {self.__ring_setting}")
         print("-----------------------")
+
+
+def rotor_from_name(rotor_label, pins=rotor_settings["Base"]["settings"], starting_position="A", ring_setting=1):
+    """create an instance of rotor
+            params:
+                label: string
+                pins: string
+                starting_position: string
+                ring_setting: int
+    """
+
+    return Rotor(rotor_label,pins,starting_position,ring_setting)
 
 
 if __name__ == "__main__":
