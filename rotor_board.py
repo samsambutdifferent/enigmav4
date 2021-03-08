@@ -11,7 +11,6 @@ class RotorBoard:
 
         # TODO Value errors
 
-
         self.rotors = []
         for i,label in enumerate(rotor_labels):
             self.rotors.append(Rotor(

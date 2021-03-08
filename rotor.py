@@ -63,7 +63,7 @@ class Rotor:
 
 
     def advance(self):
-        """moves rotor posistion along onw
+        """advances rotor posistion by
         """
         new_position = self.position + 1
         wrap_round_index =  helper.wrap_round_index(self.__contacts,new_position )
