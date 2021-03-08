@@ -14,6 +14,9 @@ class Enigma:
                 ring_setting: tuple
                 plug_leads: string
         """
+
+        # TODO Value errors
+
         self.plug_board = Plugboard()
         for connection in plug_leads.split(" "):
             if connection != "":

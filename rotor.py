@@ -11,6 +11,10 @@ class Rotor:
                 starting_position: string
                 ring_setting: int
         """
+
+        # TODO Value errors
+
+
         self.__label = label
         self.__pins = pins
         self.__contacts = rotor_settings[label]["settings"]
@@ -62,7 +66,7 @@ class Rotor:
         """moves rotor posistion along onw
         """
         new_position = self.position + 1
-        wrap_round_index = new_position % len(self.__contacts)
+        wrap_round_index =  helper.wrap_round_index(self.__contacts,new_position )
         self.position = wrap_round_index
 
 
