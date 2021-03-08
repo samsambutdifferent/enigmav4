@@ -196,6 +196,76 @@ def code_four():
     return decrypted, ans[0]
 
 
+def create_rotor_variations(base_rotor_contacts, base_rotor_pins):
+    caps_alpha = list(string.ascii_uppercase)
+
+    variations = []
+    four_char_comboz = list(it.combinations(caps_alpha,4))
+    for combo in four_char_comboz:
+        new_rotor = base_rotor_contacts.copy()
+
+        i0 = new_rotor.index(combo[0])
+        i1 = new_rotor.index(combo[1])
+
+        c0 = caps_alpha[i0]
+        c1 = caps_alpha[i1]
+
+        c0 = new_rotor.index(c0)
+        c1 = new_rotor.index(c1)
+
+        new_rotor[i0], new_rotor[i1] = new_rotor[i1], new_rotor[i0]
+        new_rotor[c0], new_rotor[c1] = new_rotor[c1], new_rotor[c0]
+
+        i2 = new_rotor.index(combo[2])
+        i3 = new_rotor.index(combo[3])
+
+        c2 = caps_alpha[i2]
+        c3 = caps_alpha[i3]
+
+        c2 = new_rotor.index(c2)
+        c3 = new_rotor.index(c3)
+
+        new_rotor[i2], new_rotor[i3] = new_rotor[i3], new_rotor[i2]
+        new_rotor[c2], new_rotor[c3] = new_rotor[c3], new_rotor[c2]
+         
+        s = "".join(new_rotor)
+
+        variations.append(s)
+
+    return variations
+
+
+def decrypter_update_reflector(msg, cribs, possiblities):
+
+    count = 0
+    for p in possiblities:
+
+        en = Enigma(
+            plug_leads=p[0], 
+            reflector="A",
+            rotor_labels=p[2],
+            starting_positions=p[3],
+            ring_settings=p[4])
+
+        en.rotor_board.reflector._Rotor__contacts = p[1]
+        decrypted = en.encode_message(msg)
+
+        ans = set()
+        if __check_crib(cribs, decrypted):
+            ans = (p[0], p[1], p[2], p[3], p[4])
+
+        if ans != set():
+            break
+        
+        count += 1
+        if count % 1000 == 0:
+            print(f"has done {count} attempts so far, please be patient....")
+
+
+    return decrypted,ans
+
+
+
 def code_five():
     # Code 5¶
 
@@ -224,98 +294,69 @@ def code_five():
     code = "HWREISXLGTTBYVXRCWWJAKZDTVZWKBDJPVQYNEQIOTIFX"
     cribs = ["FACEBOOK", "INSTAGRAM", "TWITTER", "WEIBO", "YOUTUBE"]
 
-    # take four letters and swap them to every possibe posistion
     caps_alpha = list(string.ascii_uppercase)
-    four_char_comboz = list(it.combinations(caps_alpha,4))
-
-    reflectors = []
     for reflector_label in all_reflectors:
-        reflectors.append(rotor_settings[reflector_label]["settings"])
+        reflector = rotor_settings[reflector_label]["settings"]
+        variations = create_rotor_variations(list(reflector), caps_alpha)
 
-    # test B
-    reflector_B = rotor_settings["B"]["settings"]
-    reflector_B_variations = []
+        possiblities = list(it.product(
+            ["UG IE PO NX WT"], # index 0
+            variations, # index 1
+            [("V", "II", "IV")], # index 2
+            [("A", "J", "L")], # index 3
+            [(6, 18, 7)], # index 4
+        ))  
 
-    for combo in four_char_comboz:
-        new_reflector = list(reflector_B)
-        i0 = reflector_B.index(combo[0])
-        i1 = reflector_B.index(combo[1])
-        i2 = reflector_B.index(combo[2])
-        i3 = reflector_B.index(combo[3])
-
-        new_reflector[i0], new_reflector[i2] = new_reflector[i1], new_reflector[i3]
-        s = ""
-        for x in new_reflector:
-            s += x
-        reflector_B_variations.append(s)
-
-    possiblities = list(it.product(
-        ["UG IE PO NX WT"], # index 0
-        reflector_B_variations, # index 1
-        [("V", "II", "IV")], # index 2
-        [("A", "J", "L")], # index 3
-        [(6, 18, 7)], # index 4
-    ))    
-
-    ans=set()
-    count = 0
-    for p in possiblities:
-
-        en = Enigma(
-            plug_leads=p[0], 
-            reflector="A",
-            rotor_labels=p[2],
-            starting_positions=p[3],
-            ring_settings=p[4])
-
-        en.rotor_board.reflector._Rotor__contacts = p[1]
-        decrypted = en.encode_message(code)
-
-        ans = set()
-        if __check_crib(cribs, decrypted):
-            ans = (p[0], p[1], p[2], p[3], p[4])
-
-        count += 1
-        if count % 1000 == 0:
-            print(f"count: {count}")
+        print(f"trying variations of reflector: {reflector_label}")  
+        decrypted,ans = decrypter_update_reflector(code, cribs, possiblities)
 
         if ans != set():
-            break 
+            return reflector_label,decrypted,ans[1] 
 
-    return decrypted, ans[0]
+        print(f"unable to find for reflector {reflector_label} variations")
+        print("-----------------------------") 
 
 
 if __name__ == "__main__": 
 
     # # code 1
-    # decrypted_msg, code_one_ans = code_one()
-    # print(f"Code 1 decrypted message: {decrypted_msg}")
-    # print(f"Answer to question one, missing reflector: {code_one_ans}")
+    decrypted_msg, code_one_ans = code_one()
+    print(f"Code 1 decrypted message: {decrypted_msg}")
+    print(f"Answer to question one, missing reflector: {code_one_ans}")
+    # Code 1 decrypted message: NICEWORKYOUVEMANAGEDTODECODETHEFIRSTSECRETSTRING
+    # Answer to question one, missing reflector: C
 
-    # # # code 2
-    # decrypted_msg, code_two_ans = code_two()
-    # print(f"Code 2 decrypted message: {decrypted_msg}")
-    # print(f"Answer to question two, missing starting positions: {code_two_ans}")
+    # # code 2
+    decrypted_msg, code_two_ans = code_two()
+    print(f"Code 2 decrypted message: {decrypted_msg}")
+    print(f"Answer to question two, missing starting positions: {code_two_ans}")
+    # Code 2 decrypted message: IHOPEYOUAREENJOYINGTHEUNIVERSITYOFBATHEXPERIENCESOFAR
+    # Answer to question two, missing starting positions: ('I', 'M', 'G')
 
-    # code 3
-    # decrypted_msg, code_three_ans_rotors, code_three_ans_ring_settings = code_three()
-    # print(f"Code 3 decrypted message: {decrypted_msg}")
-    # print(f"Answer to question three, missing rotors: {code_three_ans_rotors}, missing ring settings: {code_three_ans_ring_settings}")
+    # # code 3
+    decrypted_msg, code_three_ans_rotors, code_three_ans_ring_settings = code_three()
+    print(f"Code 3 decrypted message: {decrypted_msg}")
+    print(f"Answer to question three, missing rotors: {code_three_ans_rotors}, missing ring settings: {code_three_ans_ring_settings}")
 
-    # Code 3 decrypted message: SQUIRRELSPLANTTHOUSANDSOFNEWTREESEACHYEARBYMERELYFORGETTINGWHERETHEYPUTTHEIRACORNS
-    # Answer to question three, missing rotors: ('II', 'Gamma',  'IV'), missing ring settings: (24, 8, 20)
+    # # Code 3 decrypted message: SQUIRRELSPLANTTHOUSANDSOFNEWTREESEACHYEARBYMERELYFORGETTINGWHERETHEYPUTTHEIRACORNS
+    # # Answer to question three, missing rotors: ('II', 'Gamma',  'IV'), missing ring settings: (24, 8, 20)
 
     # # code 4
-    # decrypted_msg, code_four_ans = code_four()
-    # print(f"Code 4 decrypted message: {decrypted_msg}")
-    # print(f"Answer to question four, plug leads: {code_four_ans}")
-    # Code 4 decrypted message: NOTUTORSWEREHARMEDNORIMPLICATEDOFCRIMESDURINGTHEMAKINGOFTHESEEXAMPLES
-    # Answer to question four, plug leads: WP RJ AT VF IK HN CG BS
+    decrypted_msg, code_four_ans = code_four()
+    print(f"Code 4 decrypted message: {decrypted_msg}")
+    print(f"Answer to question four, plug leads: {code_four_ans}")
+    # # Code 4 decrypted message: NOTUTORSWEREHARMEDNORIMPLICATEDOFCRIMESDURINGTHEMAKINGOFTHESEEXAMPLES
+    # # Answer to question four, plug leads: WP RJ AT VF IK HN CG BS
 
 
-    # code 5
-    decrypted_msg, code_five_ans = code_five()
-    print(f"Code 5 decrypted message: {code_five_ans}")
-    print(f"Answer to question five, plug leads: {code_five_ans}")
+    # # code 5
+    reflector_label,decrypted_msg,code_five_ans = code_five()
+    print(f"Code 5 decrypted message: {decrypted_msg}")
+    print(f"Answer to question five, orignal reflector: {reflector_label}")
+    print(code_five_ans)
+    print("here")
 
-    pass
+    # # still need to compare and find out which pairs swapped
+
+    # # PQUHRSLDYXNGOKMABEFZCWVJIT
+    # # YRUHQSLDPXNGOKMIEBFZCWVJAT
