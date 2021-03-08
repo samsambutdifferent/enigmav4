@@ -46,6 +46,9 @@ def decrypter(msg, cribs, possiblities):
 
 
 def code_one():
+    """Answer to code decipher one
+    """
+
     # CODE 1
     # You recovered an Enigma machine! Amazingly, it is set up in that day's position, ready for you to replicate in your software.
     # But unfortunately the label has worn off the reflector. All the other settings are still in place, however. 
@@ -77,6 +80,9 @@ def code_one():
 
 
 def code_two():
+    """Answer to code decipher two
+    """
+    
     # Code 2¶
 
     # You leave the machine in the hands of the university. The team have cracked the day's settings thanks to some earlier
@@ -111,6 +117,9 @@ def code_two():
 
 
 def code_three():
+    """Answer to code decipher three
+    """
+
     # Code 3¶
 
     # The department has intercepted a message from the admissions team. They know it contains the word "THOUSANDS"
@@ -147,6 +156,9 @@ def code_three():
 
 
 def code_four():
+    """Answer to code decipher four
+    """
+
     # Code 4
 
     # On my way home from working late as I walked past the computer science lab I saw one of the tutors 
@@ -204,33 +216,37 @@ def create_rotor_variations(base_rotor_contacts, base_rotor_pins):
     for combo in four_char_comboz:
         new_rotor = base_rotor_contacts.copy()
 
+        # take first two from combo
         i0 = new_rotor.index(combo[0])
         i1 = new_rotor.index(combo[1])
 
-        c0 = caps_alpha[i0]
-        c1 = caps_alpha[i1]
-
-        c0 = new_rotor.index(c0)
-        c1 = new_rotor.index(c1)
-
+        # swap them
         new_rotor[i0], new_rotor[i1] = new_rotor[i1], new_rotor[i0]
+
+        # get pin character indexes
+        c0 = new_rotor.index(caps_alpha[i0])
+        c1 = new_rotor.index(caps_alpha[i1])
+
+        # swap them
         new_rotor[c0], new_rotor[c1] = new_rotor[c1], new_rotor[c0]
 
+        # take second two from combo
         i2 = new_rotor.index(combo[2])
         i3 = new_rotor.index(combo[3])
 
-        c2 = caps_alpha[i2]
-        c3 = caps_alpha[i3]
-
-        c2 = new_rotor.index(c2)
-        c3 = new_rotor.index(c3)
-
+        # swap them
         new_rotor[i2], new_rotor[i3] = new_rotor[i3], new_rotor[i2]
+
+         # get index of characters from pin
+        c2 = new_rotor.index(caps_alpha[i2])
+        c3 = new_rotor.index(caps_alpha[i3])
+
+        # swap them        
         new_rotor[c2], new_rotor[c3] = new_rotor[c3], new_rotor[c2]
          
-        s = "".join(new_rotor)
+        new_v = "".join(new_rotor)
 
-        variations.append(s)
+        variations.append(new_v)
 
     return variations
 
@@ -266,6 +282,9 @@ def decrypter_update_reflector(msg, cribs, possiblities):
 
 
 def code_five():
+    """Answer to code decipher five
+    """
+
     # Code 5¶
 
     # I later remembered that I had given the tutor permission to use the Enigma machine to solve some codes I'd received via
@@ -336,7 +355,6 @@ if __name__ == "__main__":
     decrypted_msg, code_three_ans_rotors, code_three_ans_ring_settings, code_three_ans_reflector = code_three()
     print(f"Code 3 decrypted message: {decrypted_msg}")
     print(f"Answer to question three, missing rotors: {code_three_ans_rotors}, missing ring settings: {code_three_ans_ring_settings}, missing reflector settings: {code_three_ans_reflector}")
-
     # # Code 3 decrypted message: SQUIRRELSPLANTTHOUSANDSOFNEWTREESEACHYEARBYMERELYFORGETTINGWHERETHEYPUTTHEIRACORNS
     # # Answer to question three, missing rotors: ('II', 'Gamma',  'IV'), missing ring settings: (24, 8, 20)
 
