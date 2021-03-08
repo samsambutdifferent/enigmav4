@@ -11,13 +11,23 @@ not_a_single_odd_ring_settings = [2, 4, 6, 8, 10, 20, 22, 24, 26]
 all_starting_pos = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
 
 def __check_crib(cribs, value):
+    """check all cribs if in value
+        params:
+            cribs: list
+            value: string
+    """
     for crib in cribs:
         if crib in value:
             return True     
     return False
 
 def decrypter(msg, cribs, possiblities):
-
+    """decrypt using all possibile settings and check against crib
+        params:
+            msg: string
+            cribs: list
+            possiblities: list
+    """
     count = 0
     for p in possiblities:
 
@@ -208,10 +218,15 @@ def code_four():
     return decrypted, ans[0]
 
 
-def create_rotor_variations(base_rotor_contacts, base_rotor_pins):
+def create_rotor_variations(base_rotor_contacts):
+    """create all the possible variants of rotor contacts based on 4 pair swap logic
+        params:
+            base_rotor_contacts: string
+    """
     caps_alpha = list(string.ascii_uppercase)
 
     variations = []
+    # all four pair possible combos
     four_char_comboz = list(it.combinations(caps_alpha,4))
     for combo in four_char_comboz:
         new_rotor = base_rotor_contacts.copy()
@@ -252,6 +267,13 @@ def create_rotor_variations(base_rotor_contacts, base_rotor_pins):
 
 
 def decrypter_update_reflector(msg, cribs, possiblities):
+    """decrypt using all possibile settings and check against crib
+        update the reflector to variant value before running
+        params:
+            msg: string
+            cribs: list
+            possiblities: list
+    """
 
     count = 0
     for p in possiblities:
@@ -312,10 +334,9 @@ def code_five():
     code = "HWREISXLGTTBYVXRCWWJAKZDTVZWKBDJPVQYNEQIOTIFX"
     cribs = ["FACEBOOK", "INSTAGRAM", "TWITTER", "WEIBO", "YOUTUBE"]
 
-    caps_alpha = list(string.ascii_uppercase)
     for reflector_label in all_reflectors:
         reflector = rotor_settings[reflector_label]["settings"]
-        variations = create_rotor_variations(list(reflector), caps_alpha)
+        variations = create_rotor_variations(list(reflector))
 
         possiblities = list(it.product(
             ["UG IE PO NX WT"], # index 0
