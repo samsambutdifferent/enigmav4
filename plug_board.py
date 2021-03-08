@@ -2,6 +2,8 @@ from plug_lead import PlugLead
 
 class Plugboard:
     def __init__(self):
+        """initiate Plug Board
+        """
         self.__plugleads = []
 
     def __find_pluglead(self, mappings):

@@ -3,10 +3,10 @@ from rotor import Rotor
 class RotorBoard:
     def __init__(self, rotor_labels, starting_positions, ring_settings, reflector):
         """initiate the rotor board
-                params: rotor_labels
-                        starting_positions
-                        ring_settings
-                        reflector
+                params: rotor_labels: tuple
+                        starting_positions: tuple
+                        ring_settings: tuple
+                        reflector: string
         """
 
         self.rotors = []

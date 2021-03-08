@@ -143,7 +143,7 @@ def code_three():
 
     ans = set()
     decrypted,ans = decrypter(msg=code, cribs=cribs, possiblities=possiblities)
-    return decrypted, ans[2], ans[4]
+    return decrypted, ans[2], ans[4], ans[1]
 
 
 def code_four():
@@ -334,9 +334,9 @@ if __name__ == "__main__":
     # Answer to question two, missing starting positions: ('I', 'M', 'G')
 
     # # code 3
-    decrypted_msg, code_three_ans_rotors, code_three_ans_ring_settings = code_three()
+    decrypted_msg, code_three_ans_rotors, code_three_ans_ring_settings, code_three_ans_reflector = code_three()
     print(f"Code 3 decrypted message: {decrypted_msg}")
-    print(f"Answer to question three, missing rotors: {code_three_ans_rotors}, missing ring settings: {code_three_ans_ring_settings}")
+    print(f"Answer to question three, missing rotors: {code_three_ans_rotors}, missing ring settings: {code_three_ans_ring_settings}, missing reflector settings: {code_three_ans_reflector}")
 
     # # Code 3 decrypted message: SQUIRRELSPLANTTHOUSANDSOFNEWTREESEACHYEARBYMERELYFORGETTINGWHERETHEYPUTTHEIRACORNS
     # # Answer to question three, missing rotors: ('II', 'Gamma',  'IV'), missing ring settings: (24, 8, 20)
@@ -348,7 +348,6 @@ if __name__ == "__main__":
     # # Code 4 decrypted message: NOTUTORSWEREHARMEDNORIMPLICATEDOFCRIMESDURINGTHEMAKINGOFTHESEEXAMPLES
     # # Answer to question four, plug leads: WP RJ AT VF IK HN CG BS
 
-
     # # code 5
     reflector_label,decrypted_msg,code_five_ans = code_five()
     print(f"Code 5 decrypted message: {decrypted_msg}")
@@ -356,10 +355,6 @@ if __name__ == "__main__":
     # Code 5 decrypted message: YOUCANFOLLOWMYDOGONINSTAGRAMATTALESOFHOFFMANN
     # Answer to question five, orignal reflector: B
     # PQUHRSLDYXNGOKMABEFZCWVJIT  
-
-    # # still need to compare and find out which pairs swapped
     # swapped pairs:
-    # Y P, Q R, Y P, A I, B E, E B
 
-    # # P Q UH R SLD Y XNGOKM A B E FZCWVJ I T
-    # # Y R UH Q SLD P XNGOKM I E B FZCWVJ A T
+    # Y P, Q R, A I, B E

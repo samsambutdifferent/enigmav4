@@ -2,6 +2,8 @@
 
 class PlugLead:
     def __init__(self, mapping):
+        """initiate Plug Lead
+        """
         if type(mapping) != str:
             raise ValueError('Mapping value should be a string')
         if len(mapping) != 2:

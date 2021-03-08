@@ -8,11 +8,11 @@ class Enigma:
     def __init__(self, reflector, rotor_labels, starting_positions, ring_settings, plug_leads=""):
         """initiate a version of the enigma machine
             params:
-                plug_leads
-                reflector
-                rotors
-                starting_positions:
-                ring_setting
+                reflector: string
+                rotor_labels: tuple
+                starting_positions: tuple
+                ring_setting: tuple
+                plug_leads: string
         """
         self.plug_board = Plugboard()
         for connection in plug_leads.split(" "):
