@@ -353,10 +353,13 @@ if __name__ == "__main__":
     reflector_label,decrypted_msg,code_five_ans = code_five()
     print(f"Code 5 decrypted message: {decrypted_msg}")
     print(f"Answer to question five, orignal reflector: {reflector_label}")
-    print(code_five_ans)
-    print("here")
+    # Code 5 decrypted message: YOUCANFOLLOWMYDOGONINSTAGRAMATTALESOFHOFFMANN
+    # Answer to question five, orignal reflector: B
+    # PQUHRSLDYXNGOKMABEFZCWVJIT  
 
     # # still need to compare and find out which pairs swapped
+    # swapped pairs:
+    # Y P, Q R, Y P, A I, B E, E B
 
-    # # PQUHRSLDYXNGOKMABEFZCWVJIT
-    # # YRUHQSLDPXNGOKMIEBFZCWVJAT
+    # # P Q UH R SLD Y XNGOKM A B E FZCWVJ I T
+    # # Y R UH Q SLD P XNGOKM I E B FZCWVJ A T
