@@ -265,7 +265,6 @@ def decrypter_update_reflector(msg, cribs, possiblities):
     return decrypted,ans
 
 
-
 def code_five():
     # Code 5¶
 
@@ -356,5 +355,4 @@ if __name__ == "__main__":
     # Answer to question five, orignal reflector: B
     # PQUHRSLDYXNGOKMABEFZCWVJIT  
     # swapped pairs:
-
     # Y P, Q R, A I, B E

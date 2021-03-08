@@ -219,4 +219,59 @@ class TestDemos:
         assert r.encode_right_to_left("R") == "F"
         assert r.encode_left_to_right("Z") == "S"
 
+    
+    def test_decrypting_codes(self):
+
+        en = Enigma(
+            reflector="C",
+            rotor_labels=("Beta", "Gamma", "V"),
+            starting_positions=("M", "J", "M"),
+            ring_settings=(4, 2, 14),
+            plug_leads="KI XN FL"
+        )
+
+        assert en.encode_message("DMEXBMKYCVPNQBEDHXVPZGKMTFFBJRPJTLHLCHOTKOYXGGHZ") == "NICEWORKYOUVEMANAGEDTODECODETHEFIRSTSECRETSTRING"
         
+        en = Enigma(
+            reflector="B",
+            rotor_labels=("Beta", "I", "III"),
+            starting_positions=('I', 'M', 'G'),
+            ring_settings=(23, 2, 10),
+            plug_leads="VH PT ZG BJ EY FS"
+        )
+        
+        assert en.encode_message("CMFSUPKNCBMUYEQVVDYKLRQZTPUFHSWWAKTUGXMPAMYAFITXIJKMH") == "IHOPEYOUAREENJOYINGTHEUNIVERSITYOFBATHEXPERIENCESOFAR"
+
+
+        en = Enigma(
+            reflector="C",
+            rotor_labels=('II', 'Gamma', 'IV'),
+            starting_positions=('E', 'M', 'Y'),
+            ring_settings=(24, 8, 20),
+            plug_leads="FH TS BE UQ KD AL"
+        )
+        
+        assert en.encode_message("ABSKJAKKMRITTNYURBJFWQGRSGNNYJSDRYLAPQWIAGKJYEPCTAGDCTHLCDRZRFZHKNRSDLNPFPEBVESHPY") == "SQUIRRELSPLANTTHOUSANDSOFNEWTREESEACHYEARBYMERELYFORGETTINGWHERETHEYPUTTHEIRACORNS"
+
+
+        en = Enigma(
+            reflector="A",
+            rotor_labels=('V', 'III', 'IV'),
+            starting_positions=('S', 'W', 'U'),
+            ring_settings=(24, 12, 10),
+            plug_leads="WP RJ AT VF IK HN CG BS"
+        )
+        
+        assert en.encode_message("SDNTVTPHRBNWTLMZTQKZGADDQYPFNHBPNHCQGBGMZPZLUAVGDQVYRBFYYEIXQWVTHXGNW") == "NOTUTORSWEREHARMEDNORIMPLICATEDOFCRIMESDURINGTHEMAKINGOFTHESEEXAMPLES"
+
+
+        en = Enigma(
+            reflector="B",
+            rotor_labels=('V', 'II', 'IV'),
+            starting_positions=('A', 'J', 'L'),
+            ring_settings=(6, 18, 7),
+            plug_leads="UG IE PO NX WT"
+        )
+
+        en.rotor_board.reflector._Rotor__contacts = "PQUHRSLDYXNGOKMABEFZCWVJIT"
+        assert en.encode_message("HWREISXLGTTBYVXRCWWJAKZDTVZWKBDJPVQYNEQIOTIFX") == "YOUCANFOLLOWMYDOGONINSTAGRAMATTALESOFHOFFMANN"
