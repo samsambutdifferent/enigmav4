@@ -40,8 +40,8 @@ class Enigma:
         # convert using plug board
         signal = self.plug_board.encode(signal)
 
-        # encode
-        signal = self.rotor_board.signal_received(signal)
+        # transform
+        signal = self.rotor_board.transform_signal(signal)
 
         # convert back using plug board
         signal = self.plug_board.encode(signal)

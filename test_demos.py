@@ -1,5 +1,4 @@
-
-"""a series of demonstrations from the .ipynb workbook
+"""a series of demonstrations from the .ipynb workbook and beyond
 """
 
 from enigma import Enigma

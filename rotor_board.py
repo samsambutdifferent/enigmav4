@@ -24,46 +24,45 @@ class RotorBoard:
         self.__static_rotor_index = 4
 
 
-    def __rotate_positions(self):
-        """rotate all rotatable rotors
-         TODO Update
+    def __advance_position(self):
+        """move required rotor positions forward
         """
-        reverse_rotors = list(reversed(self.rotors))
-        rotate_next = False
+        r_to_l_rotors = [rotor for rotor in self.rotors[::-1]]
 
-        for i, rotor in enumerate(reverse_rotors):
-            rotor_one = 0 == i
-            rotor_is_final = self.__max_rotor_index == i
+        advance_nxt = False
+        for i, rotor in enumerate(r_to_l_rotors):
 
-            # if it is the final rotor and is static
-            if rotor_is_final and self.__number_of_rotors >= self.__static_rotor_index:
-                break
+            # final rotor and is beyond the range of rotors able to advance
+            if (self.__max_rotor_index == i) and self.__number_of_rotors >= self.__static_rotor_index:
+                break 
+            
+            # if is first rotor always advance
+            if 0 == i:
+                advance_nxt = rotor.notched()
+                rotor.advance()
+            
+            # if turnedover
+            elif advance_nxt:
+                advance_nxt = rotor.notched()
+                rotor.advance()
 
-            # if is first rotor always rotate
-            if rotor_one:
-                rotate_next = rotor.notched()
-                rotor.rotate()
-            # if turnover
-            elif rotate_next:
-                rotate_next = rotor.notched()
-                rotor.rotate()
             # if it is not the last one and is notched
-            elif not rotor_is_final and rotor.notched():
-                rotate_next = rotor.notched()
-                rotor.rotate()
+            elif  self.__max_rotor_index != i and rotor.notched():
+                advance_nxt = rotor.notched()
+                rotor.advance()
+            
             else:
                 break
-            
-            if not rotate_next and rotor.notch == "":
-                    break
+
+            if not advance_nxt and rotor.notch == "":
+                break
     
 
-    def signal_received(self, signal):
-        """ pass signal through rotors & reflectors in sequence
-        TODO update
+    def transform_signal(self, signal):
+        """ pass signal through rotors r/l then reflector then rotors l/r
         """
         # advance rotor postions
-        self.__rotate_positions()
+        self.__advance_position()
 
         # pass signal from from right to left
         for r in self.rotors[::-1]:

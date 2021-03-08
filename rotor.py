@@ -58,7 +58,7 @@ class Rotor:
         return converted_char
 
 
-    def rotate(self):
+    def advance(self):
         """moves rotor posistion along onw
         """
         new_position = self.position + 1
