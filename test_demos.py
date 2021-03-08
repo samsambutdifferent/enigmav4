@@ -22,7 +22,7 @@ class TestDemos:
 
         assert ans == "RFKTMBXVVW"
 
-    # * With rotors `I II III`, reflector `B`, ring settings `01 01 01`, and initial positions `A A Z`, encoding an `A` produces a `U`.
+        # * With rotors `I II III`, reflector `B`, ring settings `01 01 01`, and initial positions `A A Z`, encoding an `A` produces a `U`.
 
         en = Enigma(
             plug_leads="", 
@@ -38,7 +38,7 @@ class TestDemos:
         assert ans == "U"
 
 
-    # * With rotors `I II III`, reflector `B`, ring settings `01 01 01`, and initial positions `A A A`, encoding an `A` produces a `B`.
+        # * With rotors `I II III`, reflector `B`, ring settings `01 01 01`, and initial positions `A A A`, encoding an `A` produces a `B`.
 
         en = Enigma(
             plug_leads="", 
@@ -53,7 +53,7 @@ class TestDemos:
 
         assert ans == "B"
 
-    # * With rotors `I II III`, reflector `B`, ring settings `01 01 01`, and initial positions `Q E V`, encoding an `A` produces an `L`.
+        # * With rotors `I II III`, reflector `B`, ring settings `01 01 01`, and initial positions `Q E V`, encoding an `A` produces an `L`.
 
         en = Enigma(
             plug_leads="", 
@@ -68,7 +68,7 @@ class TestDemos:
         assert ans == "L"
 
 
-    # * With rotors `IV V Beta`, reflector `B`, ring settings `14 09 24`, and initial positions `A A A`, encoding an `H` produces a `Y`.
+        # * With rotors `IV V Beta`, reflector `B`, ring settings `14 09 24`, and initial positions `A A A`, encoding an `H` produces a `Y`.
 
         en = Enigma(
             plug_leads="", 
@@ -83,9 +83,9 @@ class TestDemos:
         assert ans == "Y"
 
 
-    # * With rotors `I II III IV`, reflector `C`,
-    #  ring settings `07 11 15 19`, 
-    #  and initial positions `Q E V Z`, encoding a `Z` produces a `V`.
+        # * With rotors `I II III IV`, reflector `C`,
+        #  ring settings `07 11 15 19`, 
+        #  and initial positions `Q E V Z`, encoding a `Z` produces a `V`.
 
         en = Enigma(
             plug_leads="", 
@@ -100,10 +100,10 @@ class TestDemos:
         assert ans == "V"
 
     
-    # Set up your enigma machine with rotors IV V Beta I, reflector A, 
-    # ring settings 18 24 03 05, and initial positions E Z G P.
-    # The plugboard should map the following pairs: PC XZ FM QA ST NB HY OR EV IU.
-    # Find the result of decoding the following string: BUPXWJCDPFASXBDHLBBIBSRNWCSZXQOLBNXYAXVHOGCUUIBCVMPUZYUUKHI.
+        # Set up your enigma machine with rotors IV V Beta I, reflector A, 
+        # ring settings 18 24 03 05, and initial positions E Z G P.
+        # The plugboard should map the following pairs: PC XZ FM QA ST NB HY OR EV IU.
+        # Find the result of decoding the following string: BUPXWJCDPFASXBDHLBBIBSRNWCSZXQOLBNXYAXVHOGCUUIBCVMPUZYUUKHI.
 
         en = Enigma(
             plug_leads="PC XZ FM QA ST NB HY OR EV IU", 
@@ -275,3 +275,62 @@ class TestDemos:
 
         en.rotor_board.reflector._Rotor__contacts = "PQUHRSLDYXNGOKMABEFZCWVJIT"
         assert en.encode_message("HWREISXLGTTBYVXRCWWJAKZDTVZWKBDJPVQYNEQIOTIFX") == "YOUCANFOLLOWMYDOGONINSTAGRAMATTALESOFHOFFMANN"
+
+
+    def test_value_errors(self):
+    
+        with pytest.raises(ValueError):
+            en = Enigma(
+                plug_leads="HL MO AJ CX BZ SR NI YW DG PK", 
+                reflector="B",
+                rotor_labels=("I", "II", "III", "III"),
+                starting_positions=("A", "A", "Z"),
+                ring_settings=(1,1,1),
+            )
+
+        with pytest.raises(ValueError):
+            en = Enigma(
+                plug_leads="HL MO AJ CX BZ SR NI YW DG PK", 
+                reflector="B",
+                rotor_labels=("III", "III","III", "III"),
+                starting_positions=("A", "A", "Z"),
+                ring_settings=(1,1,1),
+            )
+
+        with pytest.raises(ValueError):
+            en = Enigma(
+                plug_leads="HL MO AJ CX BZ SR NI YW DG PK", 
+                reflector="B",
+                rotor_labels=("III", "III", "I"),
+                starting_positions=("A", "A", "Z", "A"),
+                ring_settings=(1,1,1),
+            )
+
+        
+        with pytest.raises(ValueError):
+            en = Enigma(
+                plug_leads="HL MO AJ CX BZ SR NI YW DG PK", 
+                reflector="B",
+                rotor_labels=("III", "III", "I", "I"),
+                starting_positions=("A", "A", "A"),
+                ring_settings=(1,1,1,2),
+            )
+
+        with pytest.raises(ValueError):
+            en = Enigma(
+                plug_leads="HL MO AJ CX BZ SR NI YW DG PK", 
+                reflector="B",
+                rotor_labels=("III", "III", "I", "I"),
+                starting_positions=("A", "A", "Z", "A"),
+                ring_settings=(1,1,1),
+            )
+
+        
+        with pytest.raises(ValueError):
+            en = Enigma(
+                plug_leads="HL MO AJ CX BZ SR NI YW DG PK", 
+                reflector="B",
+                rotor_labels=("III", "III", "I"),
+                starting_positions=("A", "A", "A"),
+                ring_settings=(1,1,1,2),
+            )
